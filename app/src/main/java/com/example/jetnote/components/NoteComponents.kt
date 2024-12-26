@@ -1,6 +1,8 @@
 package com.example.jetnote.components
 import android.annotation.SuppressLint
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -28,6 +30,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.jetnote.model.Note
+import com.example.jetnote.util.formatDate
 import java.text.SimpleDateFormat
 
 
@@ -88,18 +91,16 @@ fun NoteRow(
     onNoteClicked: (Note) -> Unit
 ){
 
-    val entryDate = note.entryDate
-    val formatter = SimpleDateFormat("yyyy-MM-dd")
-    val formattedDate = formatter.format(entryDate)
+
       Surface(modifier
           .padding(4.dp)
           .fillMaxWidth()
-          .clip(RoundedCornerShape(topEnd = 33.dp, bottomStart = 33.dp)),
-          color = Color(0xFFA1D3F1),
+          .clip(RoundedCornerShape(33.dp)),
+          color = Color(0xFF254857),
           shadowElevation = 6.dp
       ) {
         Column(modifier
-            .padding(horizontal = 14.dp, vertical = 6.dp),
+            .padding(horizontal = 30.dp, vertical = 15.dp),
             horizontalAlignment = Alignment.Start) {
 
             Row(modifier.fillMaxWidth()){
@@ -119,12 +120,15 @@ fun NoteRow(
                 )
             }
 
+
+
+                Text(
+                    text = note.description,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+
             Text(
-                text = note.description,
-                style = MaterialTheme.typography.bodyLarge
-            )
-            Text(
-                text =formattedDate,
+                text = formatDate(note.entryDate.time),
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Bold
             )

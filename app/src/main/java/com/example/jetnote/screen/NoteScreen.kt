@@ -2,6 +2,7 @@ package com.example.jetnote.screen
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,6 +12,8 @@ import androidx.compose.material.icons.rounded.Notifications
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
@@ -61,7 +64,8 @@ fun NoteScreen(
                     contentDescription = "App Icon" )
             },
             colors = topAppBarColors(
-                containerColor = Color(0xFFDADFE3),
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                titleContentColor = Color.Black.copy(alpha = 0.87f)
             )
         )
         //Content
@@ -116,18 +120,26 @@ fun NoteScreen(
 
         }
         HorizontalDivider(modifier = Modifier.padding(10.dp))
-        LazyColumn {
-            items(notes) { note ->
+        Surface(
+            modifier = Modifier.fillMaxSize().padding(10.dp),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            LazyColumn {
+                items(notes) { note ->
 
 //                Text(text = note.title)
-                NoteRow(
-                    note = note,
-                    onNoteClicked = {
-                        onRemoveNote(note)
-                    }
-                )
+                    NoteRow(
+                        note = note,
+                        onNoteClicked = {
+                            onRemoveNote(note)
+                        }
+                    )
+
+                    Spacer(modifier = Modifier.padding(10.dp))
+                }
             }
         }
+
 
     }
 }
